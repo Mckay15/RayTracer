@@ -1,16 +1,7 @@
-﻿  Camera.cpp
-  Collision.cpp
-  MCG_GFX_Lib.cpp
-  Main.cpp
-  Ray.cpp
-  Sphere.cpp
-  ThreadHolder.cpp
-  Tracer.cpp
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(50): warning C4018: '<': signed/unsigned mismatch
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(70): warning C4018: '<': signed/unsigned mismatch
+﻿  Main.cpp
   Generating code
-  304 of 426 functions (71.4%) were compiled, the rest were copied from previous compilation.
-    144 functions were new in current compilation
-    47 functions had inline decision re-evaluated but remain unchanged
+  1 of 425 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MCG_GFX_Framework.vcxproj -> C:\Users\james\Desktop\MCG_GFX_Framework_v1\Release\MCG_GFX_Framework.exe

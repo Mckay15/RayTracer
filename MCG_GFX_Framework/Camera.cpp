@@ -19,7 +19,7 @@ Ray Camera::rayCast(glm::ivec2 _pix)
 	glm::vec3 pos = near;
 	ray.init(pos, dir, _pix);
 	//rayContainer[_pix.x][_pix.y] = ray;
-	rays[_pix.y][_pix.x] = ray;
+	//rays[_pix.y][_pix.x] = ray;
 	return ray;
 }
 Ray Camera::rayCastOther(glm::vec2 _pix)

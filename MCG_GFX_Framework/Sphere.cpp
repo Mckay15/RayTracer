@@ -17,6 +17,7 @@ glm::vec3 Sphere::shadePixel(Ray _ray, glm::vec3 _inter, Light _light, Camera *_
 	glm::vec3 lightLocation = glm::normalize(lightPos - _inter);
 	float a = glm::max(glm::dot(lightLocation, _inter),0.0f);
 	glm::vec3 colour = _light.lightColour * a;
+	colour = colour * 255.0f;
 	return colour;
 }
 

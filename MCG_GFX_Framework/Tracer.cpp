@@ -37,7 +37,7 @@ glm::vec3 Tracer::AntiAliasing(Ray _ray, glm::vec3 _Colour)
 
 	glm::vec3 colour = (ColourOne + ColourTwo + ColourThree + ColourFour + _Colour) / 5.0f;
 
-	colour = colour / 255.0f;
+	colour = colour;
 
 	return colour;
 }
@@ -56,10 +56,13 @@ glm::vec3 Tracer::colourReturn(Ray _ray)
 				inter = objects.at(i).t;
 
 				colour = objects.at(i).shadePixel(_ray,collide.intersectNormal(_ray,objects.at(i)),lights.at(0),camera);
+
+				colour = AntiAliasing(_ray, colour);
 			}
 		}
 	}
-	return AntiAliasing(_ray, colour);
+
+	return colour;
 }
 
 glm::vec3 Tracer::colourReturnAA(Ray _ray)
