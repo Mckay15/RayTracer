@@ -64,9 +64,10 @@ int main( int argc, char *argv[] )
 	//}
 
 	// Advanced access - comment out the above DrawPixel and MCG::ShowAndHold lines, then uncomment the following:
-	tracer.addSphere(glm::vec3(0, 0, -15.0f), 1.0f);
-	tracer.addSphere(glm::vec3(0, -2.0f, -15.0f), 1.0f);
-	tracer.addLight(glm::vec3(-10, 0, 10.0f), glm::vec3(0.5, 1, 0.5));
+	tracer.addSphere(glm::vec3(0, -50.0f, -15.0f), 50.0f);
+	tracer.addSphere(glm::vec3(0, 0, -15.0f), 3.0f);
+	tracer.addSphere(glm::vec3(5, -2, -15.0f), 3.0f);
+	tracer.addLight(glm::vec3(10, 0, 10.0f), glm::vec3(1, 1, 1));
 	tracer.addCamera(&camera);
 	int yCoordChange = windowSize.y / threadCount;
 	
@@ -130,10 +131,6 @@ int main( int argc, char *argv[] )
 		{
 			for (int x = 0; x < windowSize.x; x++)
 			{
-				if (x == 320 && y == 240)
-				{
-					std::cout << "half" << std::endl;
-				}
 				MCG::DrawPixel(glm::ivec2(x, y),  //glm::vec3(250, 1, 1));
 					tracer.colourReturn(camera.rayCast(glm::vec2(x, y))));
 			}

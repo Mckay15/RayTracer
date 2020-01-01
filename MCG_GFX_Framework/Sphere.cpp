@@ -21,6 +21,10 @@ glm::vec3 Sphere::shadePixel(Ray _ray, glm::vec3 _inter, Light _light, Camera *_
 	return colour;
 }
 
+glm::vec3 Sphere::shadePixelNormal(Ray _ray, glm::vec3 _inter, Light _light, Camera *_camera)
+{
+	return (0.5f * glm::vec3(_inter.x + 1.0f, _inter.y + 1.0f, _inter.z +1.0f)) * 255.0f;
+}
 
 Sphere::~Sphere()
 {

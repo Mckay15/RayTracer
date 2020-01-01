@@ -1,4 +1,2 @@
-﻿  Tracer.cpp
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(50): warning C4018: '<': signed/unsigned mismatch
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(73): warning C4018: '<': signed/unsigned mismatch
+﻿  Sphere.cpp
   MCG_GFX_Framework.vcxproj -> C:\Users\james\Desktop\MCG_GFX_Framework_v1\Debug\MCG_GFX_Framework.exe

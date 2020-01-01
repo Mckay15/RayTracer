@@ -15,6 +15,9 @@ private:
 	std::vector<Light> lights;
 	Camera *camera;
 	std::vector<Ray> rays;
+	int tol = 5;
+	glm::vec3 AARandom(Ray _ray);
+	glm::vec3 AA[4];
 public:
 	void addSphere(glm::vec3 _centre, float _radius);
 	void addLight(glm::vec3 _pos, glm::vec3 _colour);
