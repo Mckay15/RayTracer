@@ -10,13 +10,15 @@
 #include <iostream>
 #include <thread>
 
+std::mutex mx;
+
 void threadCreation(int _yChange, glm::ivec2 _windowSize, Tracer _tracer, Camera _camera, int _i);
 
 int main( int argc, char *argv[] )
 {
 	static const int threadCount = 2;
 	int frame = 0;
-	//std::vector<std::thread> threads;
+	std::vector<std::thread> threads;
 	//std::thread threadObj[threadCount];
 	// Variable for storing window dimensions
 	glm::ivec2 windowSize( 640, 480 );
@@ -42,7 +44,7 @@ int main( int argc, char *argv[] )
 	glm::ivec3 pixelColour( 255, 0, 0 );
 
 	Camera camera;
-	camera.Init(windowSize);
+	//camera.Init(windowSize);
 	Tracer tracer;
 	// Draws a single pixel at the specified coordinates in the specified colour!
 	//MCG::DrawPixel( pixelPosition, pixelColour );
@@ -68,7 +70,7 @@ int main( int argc, char *argv[] )
 	tracer.addSphere(glm::vec3(0, 0, -15.0f), 3.0f);
 	tracer.addSphere(glm::vec3(5, -2, -15.0f), 3.0f);
 	tracer.addLight(glm::vec3(10, 0, 10.0f), glm::vec3(1, 1, 1));
-	tracer.addCamera(&camera);
+	tracer.addCamera(camera);
 	int yCoordChange = windowSize.y / threadCount;
 	
 	// Variable to keep track of time
@@ -76,11 +78,11 @@ int main( int argc, char *argv[] )
 
 	// This is our game loop
 	// It will run until the user presses 'escape' or closes the window
-	while( MCG::ProcessFrame() )
+	while (MCG::ProcessFrame())
 	{
-		//threads.clear();
+		threads.clear();
 		// Set every pixel to the same colour
-		MCG::SetBackground( glm::ivec3( 0, 0, 0 ) );
+		MCG::SetBackground(glm::ivec3(0, 0, 0));
 
 		// Change our pixel's X coordinate according to time
 		pixelPosition.x = (windowSize.x / 2) + (int)(sin(timer) * 100.0f);
@@ -89,52 +91,67 @@ int main( int argc, char *argv[] )
 
 		/*tracer.addSphere(glm::vec3(320, 240, -15.0f), 30.0f);
 		tracer.addSphere(glm::vec3(420, 240, -15.0f), 30.0f);*/
-	
-		std::size_t max = windowSize.x * windowSize.y;
+
 		std::size_t cores = std::thread::hardware_concurrency();
-		volatile std::atomic<std::size_t> count(0);
+		/*volatile std::atomic<std::size_t> count(0);
 		std::vector<std::future<void>> future_vector;
+		std::size_t max = (windowSize.x * windowSize.y);*/
+		cores = 4;
+		int yChange = (windowSize.y / cores);
 
-
-		//for (std::size_t i(0); i < cores; ++i)
-		//	future_vector.emplace_back(std::async([=, &tracer, &camera]()
-		//{
-		//	for (std::size_t index(i); index < max; index += cores)
-		//	{
-		//		std::size_t x = i % windowSize.x;
-		//		std::size_t y = i / windowSize.x;
-		//		MCG::DrawPixel(glm::ivec2(x, y),
-		//		tracer.colourReturn(camera.rayCast(glm::vec2(x, y))));
-		//	}
-		//}));
-		//future_vector.back().wait();
-		//while (cores--)
-		//	future_vector.emplace_back(
-		//		std::async([=, &tracer, &camera, &count]()
-		//	{
-		//		while (true)
-		//		{
-		//			std::size_t i = count++;
-		//			if (i >= max)
-		//			{
-		//				break;
-		//			}
-		//			std::size_t x = i % windowSize.x;
-		//			std::size_t y = i / windowSize.x;
-
-		//			MCG::DrawPixel(glm::ivec2(x, y),
-		//			tracer.colourReturn(camera.rayCast(glm::vec2(x, y))));
-		//		}
-		//	}));
-
-		for (int y = 0; y < windowSize.y; y++)
+		for (int i = 1; i <= cores; i++)
 		{
-			for (int x = 0; x < windowSize.x; x++)
-			{
-				MCG::DrawPixel(glm::ivec2(x, y),  //glm::vec3(250, 1, 1));
-					tracer.colourReturn(camera.rayCast(glm::vec2(x, y))));
-			}
+			threads.emplace_back(std::thread(threadCreation, yCoordChange, windowSize, tracer, camera, i));
 		}
+
+		for (int i = 0; i < cores; i++)
+		{
+			threads[i].join();
+		}
+
+		/*for (std::size_t i(0); i < cores; ++i)
+			future_vector.emplace_back(std::async([=, &tracer, &camera, &yChange, &cores, &windowSize]()
+		{
+			for (int x = 0; x < windowSize.x ; x++)
+			{
+				for (int y = 0; y < windowSize.y / cores; y++)
+				{
+					MCG::DrawPixel(glm::ivec2(x, y + (yChange * i)),
+						tracer.colourReturn(camera.rayCast(glm::vec2(x, y+ (yChange * i)))));
+				}
+			}
+		}));*/
+		//future_vector.back().wait();
+		/*while (cores--)
+		{
+			future_vector.emplace_back(
+				std::async([=, &tracer, &camera, &count]()
+			{*/
+		   /* bool threadactive = true;
+				while (threadactive == true)
+				{
+					std::size_t i = count++;
+					if (i >= max)
+					{
+						threadactive == false;
+					}
+					std::size_t x = i % windowSize.x;
+					std::size_t y = i / windowSize.x;
+
+					MCG::DrawPixel(glm::ivec2(x, y),
+						tracer.colourReturn(camera.rayCast(glm::vec2(x, y))));
+				}*/
+			//}));
+		//}
+
+		//for (int y = 0; y < windowSize.y; y++)
+		//{
+		//	for (int x = 0; x < windowSize.x; x++)
+		//	{
+		//		MCG::DrawPixel(glm::ivec2(x, y),  //glm::vec3(250, 1, 1));
+		//			tracer.colourReturn(camera.rayCast(glm::vec2(x, y))));
+		//	}
+		//}
 
 		//for (int i = 1; i <= threadCount; i++)
 		//{
@@ -159,8 +176,10 @@ void threadCreation(int _yChange, glm::ivec2 _windowSize, Tracer _tracer, Camera
 	{
 		for (int x = 0; x < _windowSize.x; x++)
 		{
-			MCG::DrawPixel(glm::ivec2(x, y),
-				_tracer.colourReturn(_camera.rayCast(glm::vec2(x, y))));
+			glm::vec3 temp = _tracer.colourReturn(_camera.rayCast(glm::vec2(x, y)));
+			mx.lock();
+			MCG::DrawPixel(glm::ivec2(x, y),temp);
+			mx.unlock();
 		}
 	}
 }

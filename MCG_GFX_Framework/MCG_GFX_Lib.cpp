@@ -2,7 +2,7 @@
 #include <SDL/SDL.h>
 // iostream is so we can output error messages to console
 #include <iostream>
-
+#include <future>
 #include "MCG_GFX_Lib.h"
 
 

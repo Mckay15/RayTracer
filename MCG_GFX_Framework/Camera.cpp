@@ -61,15 +61,15 @@ glm::vec3 Camera::antialiasing()
 	return glm::vec3();
 }
 
-Ray Camera::getRay(int _x, int _y)
-{
-	return rays[_y][_x];
-}
-
-void Camera::Init(glm::ivec2 _windowSize)
-{
-	rays.resize(_windowSize.y, std::vector<Ray>(_windowSize.x));
-}
+//Ray Camera::getRay(int _x, int _y)
+//{
+//	return rays[_y][_x];
+//}
+//
+//void Camera::Init(glm::ivec2 _windowSize)
+//{
+//	rays.resize(_windowSize.y, std::vector<Ray>(_windowSize.x));
+//}
 
 Camera::Camera()
 {

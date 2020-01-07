@@ -1,9 +1,7 @@
 #include "Tracer.h"
-#include "Sphere.h"
 #include "Collision.h"
 #include <vector>
 #include "Ray.h"
-#include "Camera.h"
 #include <random>
 //#include "Light.h"
 
@@ -19,7 +17,7 @@ void Tracer::addLight(glm::vec3 _pos, glm::vec3 _colour)
 	lights.push_back(light);
 }
 
-void Tracer::addCamera(Camera* _camera)
+void Tracer::addCamera(Camera _camera)
 {
 	camera = _camera;
 }
@@ -34,10 +32,10 @@ glm::vec3 Tracer::AntiAliasing(Ray _ray, glm::vec3 _Colour)
 	glm::vec2 three = glm::vec2(_ray.pix.x + 0.5, _ray.pix.y + 0.5);
 	glm::vec2 four = glm::vec2(_ray.pix.x - 0.5, _ray.pix.y + 0.5);
 
-	AA[0] = colourReturnAA(camera->rayCastOther(one));
-	AA[1] = colourReturnAA(camera->rayCastOther(two));
-    AA[2] = colourReturnAA(camera->rayCastOther(three));
-	AA[3] = colourReturnAA(camera->rayCastOther(four));
+	AA[0] = colourReturnAA(camera.rayCast(one));
+	AA[1] = colourReturnAA(camera.rayCast(two));
+    AA[2] = colourReturnAA(camera.rayCast(three));
+	AA[3] = colourReturnAA(camera.rayCast(four));
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -74,10 +72,10 @@ glm::vec3 Tracer::AARandom(Ray _ray)
 	glm::vec2 three = glm::vec2(_ray.pix.x + (0.5 - (dist(rng) / 400.0f)), _ray.pix.y + (0.5 - (dist(rng) / 400.0f)));
 	glm::vec2 four = glm::vec2(_ray.pix.x - (0.5 - (dist(rng) / 400.0f)), _ray.pix.y + (0.5 - (dist(rng) / 400.0f)));
 
-	glm::vec3 ColourOne = colourReturnAA(camera->rayCastOther(one));
-	glm::vec3 ColourTwo = colourReturnAA(camera->rayCastOther(two));
-	glm::vec3 ColourThree = colourReturnAA(camera->rayCastOther(three));
-	glm::vec3 ColourFour = colourReturnAA(camera->rayCastOther(four));
+	glm::vec3 ColourOne = colourReturnAA(camera.rayCast(one));
+	glm::vec3 ColourTwo = colourReturnAA(camera.rayCast(two));
+	glm::vec3 ColourThree = colourReturnAA(camera.rayCast(three));
+	glm::vec3 ColourFour = colourReturnAA(camera.rayCast(four));
 
 	glm::vec3 colour = (ColourOne + ColourTwo + ColourThree + ColourFour);
 

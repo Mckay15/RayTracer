@@ -16,7 +16,7 @@ public:
 	Ray getRay(int _x, int _y);
 private:
 	glm::mat4 perp();
-	std::vector<std::vector<Ray>> rays;
+	//std::vector<std::vector<Ray>> rays;
 	//Ray rayContainer[400][400];
 	float screenWidth = 640;
 	float screenHeight = 480;
