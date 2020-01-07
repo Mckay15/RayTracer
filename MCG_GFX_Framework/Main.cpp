@@ -16,7 +16,7 @@ void threadCreation(int _yChange, glm::ivec2 _windowSize, Tracer _tracer, Camera
 
 int main( int argc, char *argv[] )
 {
-	static const int threadCount = 2;
+	//static const int threadCount = 2;
 	int frame = 0;
 	std::vector<std::thread> threads;
 	//std::thread threadObj[threadCount];
@@ -71,7 +71,7 @@ int main( int argc, char *argv[] )
 	tracer.addSphere(glm::vec3(5, -2, -15.0f), 3.0f);
 	tracer.addLight(glm::vec3(10, 0, 10.0f), glm::vec3(1, 1, 1));
 	tracer.addCamera(camera);
-	int yCoordChange = windowSize.y / threadCount;
+	//int yCoordChange = windowSize.y / threadCount;
 	
 	// Variable to keep track of time
 	float timer = 0.0f;
@@ -101,7 +101,7 @@ int main( int argc, char *argv[] )
 
 		for (int i = 1; i <= cores; i++)
 		{
-			threads.emplace_back(std::thread(threadCreation, yCoordChange, windowSize, tracer, camera, i));
+			threads.emplace_back(std::thread(threadCreation, yChange, windowSize, tracer, camera, i));
 		}
 
 		for (int i = 0; i < cores; i++)

@@ -18,10 +18,10 @@ bool Collision::sphereIntersect(Ray _ray, Sphere _sphere)
 	glm::vec3 v = _ray.origin - _sphere.centre;
 
 	float a = glm::dot(_ray.driection, _ray.driection);
-	float b = glm::dot(v, _ray.driection);
+	float b = 2 * glm::dot(v, _ray.driection);
 	float c = glm::dot(v, v) - _sphere.radius * _sphere.radius;
 
-	float delta = b * b - a * c;
+	float delta = b * b - 4 * a * c;
 
 	if (delta <= 0.0f)
 	{

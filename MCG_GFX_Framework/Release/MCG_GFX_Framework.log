@@ -1,10 +1,10 @@
-﻿  Tracer.cpp
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(68): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(90): warning C4018: '<': signed/unsigned mismatch
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(113): warning C4018: '<': signed/unsigned mismatch
+﻿  Collision.cpp
+  Main.cpp
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\main.cpp(102): warning C4018: '<=': signed/unsigned mismatch
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\main.cpp(107): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  6 of 486 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
+  7 of 486 functions ( 1.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MCG_GFX_Framework.vcxproj -> C:\Users\james\Desktop\MCG_GFX_Framework_v1\Release\MCG_GFX_Framework.exe

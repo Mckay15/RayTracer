@@ -17,6 +17,8 @@ private:
 	int tol = 5;
 	glm::vec3 AARandom(Ray _ray);
 	glm::vec3 AA[4];
+	std::vector<glm::vec2> AAvec2;
+	std::vector<glm::vec3> AAvec3;
 public:
 	void addSphere(glm::vec3 _centre, float _radius);
 	void addLight(glm::vec3 _pos, glm::vec3 _colour);
