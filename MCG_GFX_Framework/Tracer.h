@@ -10,15 +10,15 @@ class Ray;
 class Tracer
 {
 private:
-	glm::vec3 background = glm::vec3(250,0,0);
+	glm::vec3 background = glm::vec3(1,0,0);
 	std::vector<Sphere> objects;
 	std::vector<Light> lights;
 	Camera camera;
-	int tol = 5;
-	glm::vec3 AARandom(Ray _ray);
+	float tol = 0.1;
+	glm::vec3 AARandom(Ray _ray, int _index);
 	glm::vec3 AA[4];
-	std::vector<glm::vec2> AAvec2;
-	std::vector<glm::vec3> AAvec3;
+	int sampleAmount = 50;
+	float raysFired = 0;
 public:
 	void addSphere(glm::vec3 _centre, float _radius);
 	void addLight(glm::vec3 _pos, glm::vec3 _colour);

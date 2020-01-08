@@ -3,6 +3,7 @@
 #include <vector>
 #include "Ray.h"
 #include <random>
+#include <iostream>
 //#include "Light.h"
 
 void Tracer::addSphere(glm::vec3 _centre, float _radius)
@@ -26,11 +27,11 @@ glm::vec3 Tracer::AntiAliasing(Ray _ray, glm::vec3 _Colour)
 {
 	glm::vec3 colour = glm::vec3(0,0,0);
 	float amount = 0;
-
-	glm::vec2 one = glm::vec2(_ray.pix.x - 0.5, _ray.pix.y - 0.5);
-	glm::vec2 two = glm::vec2(_ray.pix.x + 0.5, _ray.pix.y - 0.5);
-	glm::vec2 three = glm::vec2(_ray.pix.x + 0.5, _ray.pix.y + 0.5);
-	glm::vec2 four = glm::vec2(_ray.pix.x - 0.5, _ray.pix.y + 0.5);
+	raysFired = 0;
+	glm::vec2 one = glm::vec2(_ray.pix.x - 1, _ray.pix.y - 1);
+	glm::vec2 two = glm::vec2(_ray.pix.x + 1, _ray.pix.y - 1);
+	glm::vec2 three = glm::vec2(_ray.pix.x + 1, _ray.pix.y + 1);
+	glm::vec2 four = glm::vec2(_ray.pix.x - 1, _ray.pix.y + 1);
 
 	AA[0] = colourReturnAA(camera.rayCast(one));
 	AA[1] = colourReturnAA(camera.rayCast(two));
@@ -39,45 +40,107 @@ glm::vec3 Tracer::AntiAliasing(Ray _ray, glm::vec3 _Colour)
 
 	for (int i = 0; i < 4; i++)
 	{
-		//bool temp = glm::all(glm::lessThan(AA[i] - _Colour, glm::vec3(25, 25, 25)));
-		//temp = glm::all(glm::lessThan(glm::vec3(-25, -25, -25), AA[i] - _Colour));
-		if (glm::all(glm::lessThan(AA[i] - _Colour, glm::vec3(tol, tol, tol))) == false ||
-			glm::all(glm::lessThan(glm::vec3(-tol, -tol, -tol), AA[i] - _Colour)) == false)
+		glm::vec3 tmpp = AA[i] - _Colour;
+
+		bool temp = glm::all(glm::lessThan(AA[i] - _Colour, glm::vec3(tol, tol, tol)));
+		bool temp2 = glm::all(glm::lessThan(glm::vec3(-tol, -tol, -tol), AA[i] - _Colour));
+
+		if (glm::all(glm::lessThan(AA[i] - _Colour, glm::vec3(tol, tol, tol))) == false
+			|| glm::all(glm::lessThan(glm::vec3(-tol, -tol, -tol), AA[i] - _Colour)) == false)
 		{
-			colour = colour + AA[i] + AARandom(_ray);
-			amount += 5;
+			colour = colour + AA[i] + AARandom(_ray,i);
+			//amount += sampleAmount;
 		}
 		else
 		{
 			colour = colour + AA[i];
-			amount++;
+			raysFired++;
 		}
 	}
 
-	colour = (colour + _Colour) / (amount + 1);
+	colour = (colour + _Colour);
+	colour = colour/ (raysFired + 1);
+
+	//if (glm::all(glm::lessThan(colour, glm::vec3(0.05, 0.05, 0.05))))
+	//{
+	//	std::cout << "stuff" << std::endl;
+	//}
 
 	return colour;
 }
 
-glm::vec3 Tracer::AARandom(Ray _ray)
+glm::vec3 Tracer::AARandom(Ray _ray, int _index)
 {
+	glm::vec3 colour = glm::vec3(0, 0, 0);
 	std::random_device dev;
 	std::mt19937 rng(dev());
-	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 100);
-
+	std::uniform_int_distribution<std::mt19937::result_type> dist(1, 100);
 	float temp = dist(rng);
 
-	glm::vec2 one = glm::vec2(_ray.pix.x - (0.5 - (dist(rng)/400.0f)), _ray.pix.y - (0.5 - (dist(rng) / 400.0f)));
-	glm::vec2 two = glm::vec2(_ray.pix.x + (0.5 - (dist(rng) / 400.0f)), _ray.pix.y - (0.5 - (dist(rng) / 400.0f)));
-	glm::vec2 three = glm::vec2(_ray.pix.x + (0.5 - (dist(rng) / 400.0f)), _ray.pix.y + (0.5 - (dist(rng) / 400.0f)));
-	glm::vec2 four = glm::vec2(_ray.pix.x - (0.5 - (dist(rng) / 400.0f)), _ray.pix.y + (0.5 - (dist(rng) / 400.0f)));
+	switch (_index)
+	{
+	case 0:
+		for (int i = 0; i < sampleAmount; i++)
+		{
+			glm::vec2 one = glm::vec2(_ray.pix.x - (0.5 - (dist(rng) / 100.0f)), _ray.pix.y - (0.5 - (dist(rng) / 100.0f)));
+			colour = colour + colourReturnAA(camera.rayCast(one));
+			raysFired++;
+		}
+		break;
+	case 1:
+		for (int i = 0; i < sampleAmount; i++)
+		{
+			glm::vec2 two = glm::vec2(_ray.pix.x + (0.5 - (dist(rng) / 100.0f)), _ray.pix.y - (0.5 - (dist(rng) / 100.0f)));
+			colour = colour + colourReturnAA(camera.rayCast(two));
+			raysFired++;
+		}
+		break;
+	case 2:
+		for (int i = 0; i < sampleAmount; i++)
+		{
+			glm::vec2 three = glm::vec2(_ray.pix.x + (0.5 - (dist(rng) / 100.0f)), _ray.pix.y + (0.5 - (dist(rng) / 100.0f)));
+			colour = colour + colourReturnAA(camera.rayCast(three));
+			raysFired++;
+		}
+		break;
+	case 3:
+		for (int i = 0; i < sampleAmount; i++)
+		{
+			glm::vec2 four = glm::vec2(_ray.pix.x - (0.5 - (dist(rng) / 100.0f)), _ray.pix.y + (0.5 - (dist(rng) / 100.0f)));
+			colour = colour + colourReturnAA(camera.rayCast(four));
+			raysFired++;
+		}
+		break;
+	default:
+		std::cout << "No Case!?!?!?" << std::endl;
+		break;
+	}
 
-	glm::vec3 ColourOne = colourReturnAA(camera.rayCast(one));
-	glm::vec3 ColourTwo = colourReturnAA(camera.rayCast(two));
-	glm::vec3 ColourThree = colourReturnAA(camera.rayCast(three));
-	glm::vec3 ColourFour = colourReturnAA(camera.rayCast(four));
+	//float temp = dist(rng);
+	/*for (int i = 0; i < sampleAmount; i++)
+	{
+		glm::vec2 one = glm::vec2(_ray.pix.x - (1 - (dist(rng)/  100.0f)), _ray.pix.y - (1 - (dist(rng) / 100.0f)));
+		glm::vec2 two = glm::vec2(_ray.pix.x + (1 - (dist(rng) / 100.0f)), _ray.pix.y - (1 - (dist(rng) / 100.0f)));
+		glm::vec2 three = glm::vec2(_ray.pix.x + (1 - (dist(rng) / 100.0f)), _ray.pix.y + (1 - (dist(rng) / 100.0f)));
+		glm::vec2 four = glm::vec2(_ray.pix.x - (1 - (dist(rng) / 100.0f)), _ray.pix.y + (1 - (dist(rng) / 100.0f)));
 
-	glm::vec3 colour = (ColourOne + ColourTwo + ColourThree + ColourFour);
+		colour = colour + colourReturnAA(camera.rayCast(one));
+		colour = colour + colourReturnAA(camera.rayCast(two));
+		colour = colour + colourReturnAA(camera.rayCast(three));
+		colour = colour + colourReturnAA(camera.rayCast(four));
+		raysFired = raysFired + 4;
+	}*/
+	//glm::vec2 one = glm::vec2(_ray.pix.x - (0.5 - (dist(rng)/400.0f)), _ray.pix.y - (0.5 - (dist(rng) / 400.0f)));
+	//glm::vec2 two = glm::vec2(_ray.pix.x + (0.5 - (dist(rng) / 400.0f)), _ray.pix.y - (0.5 - (dist(rng) / 400.0f)));
+	//glm::vec2 three = glm::vec2(_ray.pix.x + (0.5 - (dist(rng) / 400.0f)), _ray.pix.y + (0.5 - (dist(rng) / 400.0f)));
+	//glm::vec2 four = glm::vec2(_ray.pix.x - (0.5 - (dist(rng) / 400.0f)), _ray.pix.y + (0.5 - (dist(rng) / 400.0f)));
+
+	//glm::vec3 ColourOne = colourReturnAA(camera.rayCast(one));
+	//glm::vec3 ColourTwo = colourReturnAA(camera.rayCast(two));
+	//glm::vec3 ColourThree = colourReturnAA(camera.rayCast(three));
+	//glm::vec3 ColourFour = colourReturnAA(camera.rayCast(four));
+
+	//glm::vec3 colour = (ColourOne + ColourTwo + ColourThree + ColourFour);
 
 	return colour;
 }
@@ -96,13 +159,13 @@ glm::vec3 Tracer::colourReturn(Ray _ray)
 				inter = objects.at(i).t;
 
 				colour = objects.at(i).shadePixel(_ray,collide.intersectNormal(_ray,objects.at(i)),lights.at(0),camera);
-
+			
 				colour = AntiAliasing(_ray, colour);
 			}
 		}
 	}
 
-	return colour;
+	return colour * 255.0f;
 }
 
 glm::vec3 Tracer::colourReturnAA(Ray _ray)

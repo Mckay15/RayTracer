@@ -1,10 +1,6 @@
-﻿  MCG_GFX_Lib.cpp
-  Main.cpp
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\main.cpp(102): warning C4018: '<=': signed/unsigned mismatch
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\main.cpp(107): warning C4018: '<': signed/unsigned mismatch
-  Tracer.cpp
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(68): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(90): warning C4018: '<': signed/unsigned mismatch
-c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(113): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  Tracer.cpp
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.h(17): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(78): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(153): warning C4018: '<': signed/unsigned mismatch
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(176): warning C4018: '<': signed/unsigned mismatch
   MCG_GFX_Framework.vcxproj -> C:\Users\james\Desktop\MCG_GFX_Framework_v1\Debug\MCG_GFX_Framework.exe

@@ -4,8 +4,8 @@
 Ray Camera::rayCast(glm::ivec2 _pix)
 {
 	Ray ray;
-	float px = ((2.0f * (float)_pix.x) / ((float)screenWidth)) - 1.0f;
-	float py = -((2.0f * (float)_pix.y) / ((float)screenHeight)) + 1.0f;
+	float px = ((2.0f * (float)_pix.x) / ((float)windowSize.x)) - 1.0f;
+	float py = -((2.0f * (float)_pix.y) / ((float)windowSize.y)) + 1.0f;
 	//ray.init(_pix, glm::vec2(screenWidth, screenHeight));
 	glm::vec4 near = glm::vec4(px, py, -1, 1);
 	glm::vec4 far = glm::vec4(px, py, 1, 1);
@@ -25,8 +25,8 @@ Ray Camera::rayCast(glm::ivec2 _pix)
 Ray Camera::rayCastOther(glm::vec2 _pix)
 {
 	Ray ray;
-	float px = ((2.0f * (float)_pix.x) / ((float)screenWidth)) - 1.0f;
-	float py = -((2.0f * (float)_pix.y) / ((float)screenHeight)) + 1.0f;
+	float px = ((2.0f * (float)_pix.x) / ((float)windowSize.x)) - 1.0f;
+	float py = -((2.0f * (float)_pix.y) / ((float)windowSize.y)) + 1.0f;
 	//ray.init(_pix, glm::vec2(screenWidth, screenHeight));
 	glm::vec4 near = glm::vec4(px, py, -1, 1);
 	glm::vec4 far = glm::vec4(px, py, 1, 1);
@@ -45,7 +45,7 @@ Ray Camera::rayCastOther(glm::vec2 _pix)
 
 glm::mat4 Camera::perp()
 {
-	glm::mat4 perjection = glm::perspective(glm::radians(45.0f), (screenWidth / screenHeight), 1.0f, 150.0f);
+	glm::mat4 perjection = glm::perspective(glm::radians(45.0f), (windowSize.x / windowSize.y), 1.0f, 150.0f);
 	return perjection;
 }
 
@@ -66,10 +66,10 @@ glm::vec3 Camera::antialiasing()
 //	return rays[_y][_x];
 //}
 //
-//void Camera::Init(glm::ivec2 _windowSize)
-//{
-//	rays.resize(_windowSize.y, std::vector<Ray>(_windowSize.x));
-//}
+void Camera::Init(glm::ivec2 _windowSize)
+{
+	windowSize = _windowSize;
+}
 
 Camera::Camera()
 {

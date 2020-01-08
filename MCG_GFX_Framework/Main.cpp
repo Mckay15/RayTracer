@@ -21,7 +21,7 @@ int main( int argc, char *argv[] )
 	std::vector<std::thread> threads;
 	//std::thread threadObj[threadCount];
 	// Variable for storing window dimensions
-	glm::ivec2 windowSize( 640, 480 );
+	glm::ivec2 windowSize( 720, 480 );
 
 	// Call MCG::Init to initialise and create your window
 	// Tell it what size you want the window to be
@@ -41,10 +41,10 @@ int main( int argc, char *argv[] )
 
 	// Preparing a colour to draw
 	// Colours are RGB, each value ranges between 0 and 255
-	glm::ivec3 pixelColour( 255, 0, 0 );
+	//glm::ivec3 pixelColour( 255, 0, 0 );
 
 	Camera camera;
-	//camera.Init(windowSize);
+	camera.Init(windowSize);
 	Tracer tracer;
 	// Draws a single pixel at the specified coordinates in the specified colour!
 	//MCG::DrawPixel( pixelPosition, pixelColour );
@@ -69,7 +69,7 @@ int main( int argc, char *argv[] )
 	tracer.addSphere(glm::vec3(0, -50.0f, -15.0f), 50.0f);
 	tracer.addSphere(glm::vec3(0, 0, -15.0f), 3.0f);
 	tracer.addSphere(glm::vec3(5, -2, -15.0f), 3.0f);
-	tracer.addLight(glm::vec3(10, 0, 10.0f), glm::vec3(1, 1, 1));
+	tracer.addLight(glm::vec3(-10, 0, 10.0f), glm::vec3(0.5, 0, 1));
 	tracer.addCamera(camera);
 	//int yCoordChange = windowSize.y / threadCount;
 	
@@ -80,6 +80,7 @@ int main( int argc, char *argv[] )
 	// It will run until the user presses 'escape' or closes the window
 	while (MCG::ProcessFrame())
 	{
+		auto t1 = std::chrono::high_resolution_clock::now();
 		threads.clear();
 		// Set every pixel to the same colour
 		MCG::SetBackground(glm::ivec3(0, 0, 0));
@@ -96,12 +97,12 @@ int main( int argc, char *argv[] )
 		/*volatile std::atomic<std::size_t> count(0);
 		std::vector<std::future<void>> future_vector;
 		std::size_t max = (windowSize.x * windowSize.y);*/
-		cores = 4;
+		cores = 3;
 		int yChange = (windowSize.y / cores);
 
-		for (int i = 1; i <= cores; i++)
+		for (int i = 0; i < cores; i++)
 		{
-			threads.emplace_back(std::thread(threadCreation, yChange, windowSize, tracer, camera, i));
+			threads.emplace_back(threadCreation, yChange, windowSize, tracer, camera, i);
 		}
 
 		for (int i = 0; i < cores; i++)
@@ -164,7 +165,10 @@ int main( int argc, char *argv[] )
 		//
 		// Draw the pixel to the screen
 		//MCG::DrawPixel( pixelPosition, pixelColour );
-		std::cout << "end of frame " << frame++ <<" " << cores << std::endl;
+		auto t2 = std::chrono::high_resolution_clock::now();
+
+		std::cout << "end of frame " << frame++ <<" frame time: " << 
+			std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()<< std::endl;
 	}
 
 	return 0;
@@ -172,7 +176,7 @@ int main( int argc, char *argv[] )
 
 void threadCreation(int _yChange, glm::ivec2 _windowSize, Tracer _tracer, Camera _camera, int _i)
 {
-	for (int y = 0; y < _yChange * _i; y++)
+	for (int y = _yChange * _i; y < _yChange * (_i + 1); y++)
 	{
 		for (int x = 0; x < _windowSize.x; x++)
 		{
