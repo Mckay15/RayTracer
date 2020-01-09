@@ -1,6 +1,15 @@
-﻿  Tracer.cpp
+﻿  Camera.cpp
+  Main.cpp
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.h(17): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\main.cpp(103): warning C4018: '<': signed/unsigned mismatch
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\main.cpp(108): warning C4018: '<': signed/unsigned mismatch
+  Sphere.cpp
+  ThreadHolder.cpp
+c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.h(17): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Tracer.cpp
 c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.h(17): warning C4305: 'initializing': truncation from 'double' to 'float'
 c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(78): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
 c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(153): warning C4018: '<': signed/unsigned mismatch
 c:\users\james\desktop\mcg_gfx_framework_v1\mcg_gfx_framework\tracer.cpp(176): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   MCG_GFX_Framework.vcxproj -> C:\Users\james\Desktop\MCG_GFX_Framework_v1\Debug\MCG_GFX_Framework.exe

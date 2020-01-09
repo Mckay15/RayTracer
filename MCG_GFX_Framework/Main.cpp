@@ -97,7 +97,7 @@ int main( int argc, char *argv[] )
 		/*volatile std::atomic<std::size_t> count(0);
 		std::vector<std::future<void>> future_vector;
 		std::size_t max = (windowSize.x * windowSize.y);*/
-		cores = 3;
+		cores = 16;
 		int yChange = (windowSize.y / cores);
 
 		for (int i = 0; i < cores; i++)
