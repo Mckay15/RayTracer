@@ -4,7 +4,7 @@ class Ray;
 class Light;
 class Camera;
 
-class Sphere
+class Sphere //basic sphere object
 {
 public:
 	float t;

@@ -1,7 +1,7 @@
 #pragma once
 #include "MCG_GFX_Lib.h"
 
-class Light
+class Light //holds light informaiton
 {
 public:
 	glm::vec3 lightColour = glm::vec3(1, 1, 1);

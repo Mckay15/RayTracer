@@ -7,15 +7,16 @@ class Camera
 {
 public:
 	Ray rayCast(glm::ivec2 _pix);
-	Ray rayCastOther(glm::vec2 _pix);
+	//Ray rayCastOther(glm::vec2 _pix);
 	void Init(glm::ivec2 _windowSize);
 	Camera();
 	~Camera();
 	glm::mat4 viewMatrix();
-	glm::vec3 antialiasing();
 	//Ray getRay(int _x, int _y);
 private:
 	glm::mat4 perp();
+	glm::mat4 perspectiveMat;
+	glm::mat4 view;
 	//std::vector<std::vector<Ray>> rays;
 	//Ray rayContainer[400][400];
 	glm::vec2 windowSize;

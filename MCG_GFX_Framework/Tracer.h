@@ -7,7 +7,7 @@
 
 class Ray;
 
-class Tracer
+class Tracer  //tracers rays
 {
 private:
 	glm::vec3 background = glm::vec3(1,0,0);

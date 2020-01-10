@@ -150,13 +150,11 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MCG_GFX_Lib.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="ThreadHolder.cpp" />
     <ClCompile Include="Tracer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,10 +162,8 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MCG_GFX_Lib.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Sphere.h" />
-    <ClInclude Include="ThreadHolder.h" />
     <ClInclude Include="Tracer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

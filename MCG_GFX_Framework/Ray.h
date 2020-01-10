@@ -1,7 +1,7 @@
 #pragma once
 #include <GLM/glm.hpp>
 
-class Ray
+class Ray //holds ray information
 {
 public:
 	void init(glm::vec3 _point, glm::vec3 _direction, glm::ivec2 _pix);
